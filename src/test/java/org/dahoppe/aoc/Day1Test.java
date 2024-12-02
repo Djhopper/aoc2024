@@ -1,4 +1,4 @@
-package org.dahoppe.day1;
+package org.dahoppe.aoc;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class Day1Test {
 
     @Test
     void testReadInput() throws IOException {
-        assertThat(new Day1().readInputFromResource("1a.txt")).satisfies(input -> {
+        assertThat(Day1.readInputFromResource("1.txt")).satisfies(input -> {
             assertThat(input.left()).hasSize(1000);
             assertThat(input.right()).hasSize(1000);
         });
@@ -29,7 +29,7 @@ class Day1Test {
 
     @Test
     void testSolveAPuzzle() throws IOException {
-        assertThat(Day1.solveA(Day1.readInputFromResource("1a.txt"))).isEqualTo(2086478);
+        assertThat(Day1.solveA(Day1.readInputFromResource("1.txt"))).isEqualTo(2086478);
     }
 
     @Test
@@ -39,7 +39,7 @@ class Day1Test {
 
     @Test
     void testSolveBPuzzle() throws IOException {
-        assertThat(Day1.solveB(Day1.readInputFromResource("1a.txt"))).isEqualTo(24941624);
+        assertThat(Day1.solveB(Day1.readInputFromResource("1.txt"))).isEqualTo(24941624);
     }
 
 }

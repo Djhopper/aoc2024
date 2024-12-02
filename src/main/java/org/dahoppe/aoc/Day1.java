@@ -1,4 +1,4 @@
-package org.dahoppe.day1;
+package org.dahoppe.aoc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
