@@ -1,9 +1,5 @@
 package org.dahoppe.aoc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,10 +7,8 @@ import java.util.List;
 
 public class Day2 {
 
-    private static final Logger log = LoggerFactory.getLogger(Day2.class);
-
-    public static List<List<Integer>> readInputFromResource(String filename) throws IOException {
-        String rawInput = new String(Day2.class.getResourceAsStream("/input/" + filename).readAllBytes());
+    public static List<List<Integer>> readInputFromResource(String filename) {
+        String rawInput = Utilities.readInput(filename);
 
         return Arrays.stream(rawInput.split("\\r\\n"))
                 .map(line -> Arrays.stream(line.split(" "))

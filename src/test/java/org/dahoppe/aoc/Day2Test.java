@@ -2,7 +2,6 @@ package org.dahoppe.aoc;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +18,7 @@ class Day2Test {
     );
 
     @Test
-    void testReadInput() throws IOException {
+    void testReadInput() {
         assertThat(Day2.readInputFromResource("2.txt"))
                 .hasSize(1000)
                 .allSatisfy(report -> assertThat(report).isNotEmpty());
@@ -31,7 +30,7 @@ class Day2Test {
     }
 
     @Test
-    void testSolveAPuzzle() throws IOException {
+    void testSolveAPuzzle() {
         assertThat(Day2.solveA(Day2.readInputFromResource("2.txt"))).isEqualTo(242);
     }
 
@@ -41,7 +40,7 @@ class Day2Test {
     }
 
     @Test
-    void testSolveBPuzzle() throws IOException {
+    void testSolveBPuzzle() {
         assertThat(Day2.solveB(Day2.readInputFromResource("2.txt"))).isEqualTo(311);
     }
 

@@ -3,7 +3,6 @@ package org.dahoppe.aoc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +16,8 @@ public class Day1 {
 
     public record Input(List<Integer> left, List<Integer> right) {}
 
-    public static Input readInputFromResource(String filename) throws IOException {
-        String rawInput = new String(Day1.class.getResourceAsStream("/input/" + filename).readAllBytes());
+    public static Input readInputFromResource(String filename) {
+        String rawInput = Utilities.readInput(filename);
 
         List<Integer> left = new ArrayList<>();
         List<Integer> right = new ArrayList<>();
