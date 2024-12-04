@@ -1,1 +1,1 @@
-Puzzle inputs go in this folder, eg `1a.txt`.
+Puzzle inputs go in this folder, eg `1.txt`.
