@@ -10,7 +10,7 @@ public class Day2 {
     public static List<List<Integer>> readInputFromResource(String filename) {
         String rawInput = Utilities.readInput(filename);
 
-        return Arrays.stream(rawInput.split("\\r\\n"))
+        return Utilities.splitOnNewLine(rawInput)
                 .map(line -> Arrays.stream(line.split(" "))
                         .map(Integer::parseInt)
                         .toList())

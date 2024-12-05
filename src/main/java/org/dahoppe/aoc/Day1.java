@@ -1,8 +1,5 @@
 package org.dahoppe.aoc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +9,6 @@ import java.util.stream.Collectors;
 
 public class Day1 {
 
-    private static final Logger log = LoggerFactory.getLogger(Day1.class);
-
     public record Input(List<Integer> left, List<Integer> right) {}
 
     public static Input readInputFromResource(String filename) {
@@ -21,15 +16,13 @@ public class Day1 {
 
         List<Integer> left = new ArrayList<>();
         List<Integer> right = new ArrayList<>();
-        String[] lines = rawInput.split("\\r\\n");
-        log.info("Reading {} lines of input", lines.length);
-
-        for (String line: lines) {
-            String[] numbers = line.split("   ");
-            assert numbers.length == 2;
-            left.add(Integer.parseInt(numbers[0]));
-            right.add(Integer.parseInt(numbers[1]));
-        }
+        Utilities.splitOnNewLine(rawInput)
+                .forEach(line -> {
+                    String[] numbers = line.split("   ");
+                    assert numbers.length == 2;
+                    left.add(Integer.parseInt(numbers[0]));
+                    right.add(Integer.parseInt(numbers[1]));
+                });
 
         return new Input(left, right);
     }

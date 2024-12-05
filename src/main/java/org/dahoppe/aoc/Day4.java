@@ -1,14 +1,9 @@
 package org.dahoppe.aoc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static org.dahoppe.aoc.Utilities.splitOnNewLine;
 
 
 public class Day4 {
@@ -16,7 +11,7 @@ public class Day4 {
     private static final String TARGET_STRING = "XMAS";
 
     public static List<List<Character>> parseInput(String input) {
-        return Arrays.stream(input.split("\\s+"))
+        return splitOnNewLine(input)
                 .map(Day4::toCharList)
                 .toList();
     }
