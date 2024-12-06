@@ -1,18 +1,15 @@
 package org.dahoppe.aoc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
 import static java.util.function.Predicate.not;
 import static org.dahoppe.aoc.Utilities.*;
 
 public class Day5 {
-
-    private static final Logger log = LoggerFactory.getLogger(Day5.class);
 
     public record Rule(int mustOccurFirst, int mustOccurSecond) {}
 
@@ -40,13 +37,22 @@ public class Day5 {
 
     public static int solveA(Input input) {
         return input.updates().stream()
-                .filter(update -> isCorrectlyOrdered(update, input.rules()))
+                .filter(isCorrectlyOrdered(input.rules()))
                 .mapToInt(Day5::getMiddleElement)
                 .sum();
     }
 
-    private static boolean isCorrectlyOrdered(List<Integer> update, List<Rule> rules) {
-        return rules.stream().allMatch(rule -> obeysRule(update, rule));
+    public static int solveB(Input input) {
+        Comparator<Integer> comparator = comparatorFromRules(new HashSet<>(input.rules()));
+        return input.updates().stream()
+                .filter(not(isCorrectlyOrdered(input.rules())))
+                .map(update -> update.stream().sorted(comparator).toList())
+                .mapToInt(Day5::getMiddleElement)
+                .sum();
+    }
+
+    private static Predicate<List<Integer>> isCorrectlyOrdered(List<Rule> rules) {
+        return update -> rules.stream().allMatch(rule -> obeysRule(update, rule));
     }
 
     private static boolean obeysRule(List<Integer> update, Rule rule) {
@@ -61,37 +67,11 @@ public class Day5 {
         return update.get((update.size() - 1) / 2);
     }
 
-    public static Map<Integer, Set<Integer>> generateOccursBeforeMap(List<Rule> inputRules) {
-        Map<Integer, Set<Integer>> occursBeforeMap = inputRules.stream()
-                .collect(Collectors.groupingBy(
-                        Rule::mustOccurFirst,
-                        Collectors.mapping(Rule::mustOccurSecond, Collectors.toSet()))
-                );
-        AtomicBoolean madeProgress = new AtomicBoolean(true);
-        while (madeProgress.get()) {
-            madeProgress.set(false);
-            Set<Rule> toAdd = new HashSet<>();
-            // Apply transitivity - a < b & b < c => a < c
-            occursBeforeMap.forEach((a, bs) -> bs
-                    .forEach(b ->
-                            occursBeforeMap.getOrDefault(b, new HashSet<>()).forEach(c -> {
-                                if (!bs.contains(c)) {
-                                    madeProgress.set(true);
-                                    toAdd.add(new Rule(a, c));
-                                }
-                            })
-                    ));
-            toAdd.forEach(rule -> occursBeforeMap.get(rule.mustOccurFirst()).add(rule.mustOccurSecond()));
-        }
-
-        return occursBeforeMap;
-    }
-
-    private static Comparator<Integer> comparatorFromOccursBeforeMap(Map<Integer, Set<Integer>> occursBeforeMap) {
+    private static Comparator<Integer> comparatorFromRules(Set<Rule> rules) {
         return (a, b) -> {
-            if (occursBeforeMap.getOrDefault(a, Set.of()).contains(b)) {
+            if (rules.contains(new Rule(a, b))) {
                 return -1;
-            } else if ((occursBeforeMap.getOrDefault(b, Set.of()).contains(a))) {
+            } else if (rules.contains(new Rule(b, a))) {
                 return 1;
             } else {
                 return 0;
@@ -99,26 +79,6 @@ public class Day5 {
         };
     }
 
-    public static int solveB(Input input) {
-        return input.updates().stream()
-                .filter(not(update -> isCorrectlyOrdered(update, input.rules())))
-                .map(update -> {
-                    // Only consider relevant rules -
-                    // Can't calculate a single total ordering because the rules only give us total orderings for
-                    // subsets of the set of numbers, not for all of them.
-                    List<Rule> relevantRules = input.rules().stream()
-                            .filter(rule -> update.contains(rule.mustOccurFirst()) && update.contains(rule.mustOccurSecond()))
-                            .toList();
-                    Comparator<Integer> comparator = comparatorFromOccursBeforeMap(generateOccursBeforeMap(relevantRules));
-                    return update.stream().sorted(comparator).toList();
-                })
-                .peek(update -> {
-                    if (!isCorrectlyOrdered(update, input.rules())) {
-                        log.info("Uh oh");
-                    }
-                })
-                .mapToInt(Day5::getMiddleElement)
-                .sum();
-    }
+
 
 }

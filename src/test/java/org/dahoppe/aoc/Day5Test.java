@@ -74,27 +74,6 @@ class Day5Test {
     }
 
     @Test
-    void testGenerateOccursBeforeMap() {
-        assertThat(Day5.generateOccursBeforeMap(List.of(
-                new Day5.Rule(1, 2),
-                new Day5.Rule(2, 3),
-                new Day5.Rule(3, 4)))).isEqualTo(Map.of(
-                        1, Set.of(2, 3, 4),
-                        2, Set.of(3, 4),
-                        3, Set.of(4)
-        ));
-    }
-
-    @Test
-    void testGenerateOccursBeforeMapPuzzle() {
-        List<Day5.Rule> rules = Day5.parseInput(PUZZLE_INPUT).rules();
-        Set<Integer> elements = rules.stream()
-                .flatMap(rule -> Stream.of(rule.mustOccurFirst(), rule.mustOccurSecond()))
-                .collect(Collectors.toSet());
-        assertThat(Day5.generateOccursBeforeMap(rules)).containsOnlyKeys(elements);
-    }
-
-    @Test
     void testSolveBExample() {
         assertThat(Day5.solveB(Day5.parseInput(EXAMPLE_INPUT))).isEqualTo(123);
     }
