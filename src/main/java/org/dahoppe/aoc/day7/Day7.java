@@ -1,31 +1,33 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day7;
+
+import org.dahoppe.aoc.util.Parsing;
 
 import java.util.List;
 
-public class Day7 {
+class Day7 {
 
-    public record Equation(long testValue, List<Long> numbers) {
-        public Equation withoutFirstElement() {
+    record Equation(long testValue, List<Long> numbers) {
+        Equation withoutFirstElement() {
             return new Equation(testValue(), numbers().subList(1, numbers().size()));
         }
-        public long firstElement() {
+        long firstElement() {
             return numbers().getFirst();
         }
     }
 
-    public static List<Equation> parseEquations(String input) {
-        return Utilities.splitOnNewLine(input)
+    static List<Equation> parseEquations(String input) {
+        return Parsing.splitOnNewLine(input)
                 .map(line -> {
                     String[] parts = line.split(": ");
                     assert parts.length == 2;
                     long testValue = Long.parseLong(parts[0]);
-                    List<Long> numbers = Utilities.split(parts[1], " ").map(Long::parseLong).toList();
+                    List<Long> numbers = Parsing.split(parts[1], " ").map(Long::parseLong).toList();
                     return new Equation(testValue, numbers);
                 })
                 .toList();
     }
 
-    public static long solveA(List<Equation> equations) {
+    static long solveA(List<Equation> equations) {
         return equations.stream()
                 .filter(Day7::canBeValid)
                 .mapToLong(Equation::testValue)
@@ -45,7 +47,7 @@ public class Day7 {
                 || canBeValid(equation.withoutFirstElement(), total + equation.firstElement());
     }
 
-    public static long solveB(List<Equation> equations) {
+    static long solveB(List<Equation> equations) {
         return equations.stream()
                 .filter(Day7::canBeValidB)
                 .mapToLong(Equation::testValue)

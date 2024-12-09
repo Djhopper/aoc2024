@@ -1,5 +1,6 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day3;
 
+import org.dahoppe.aoc.util.Files;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -18,7 +19,7 @@ class Day3Test {
            new Day3.Do(),
            new Day3.Mul(8, 5)
     );
-    private static final String PUZZLE_INPUT = Utilities.readInput("3.txt");
+    private static final String PUZZLE_INPUT = Files.read("3.txt");
 
     @Test
     void testParseA() {

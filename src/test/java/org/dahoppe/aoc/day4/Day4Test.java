@@ -1,10 +1,7 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day4;
 
+import org.dahoppe.aoc.util.Files;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +19,7 @@ class Day4Test {
             MAMMMXMMMM
             MXMXAXMASX
             """;
-    private static final String PUZZLE_INPUT = Utilities.readInput("4.txt");
+    private static final String PUZZLE_INPUT = Files.read("4.txt");
 
     @Test
     void testParseExample() {

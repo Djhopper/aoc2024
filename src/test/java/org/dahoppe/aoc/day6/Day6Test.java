@@ -1,5 +1,6 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day6;
 
+import org.dahoppe.aoc.util.Files;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ class Day6Test {
             #.........
             ......#...
             """;
-    private static final String PUZZLE_INPUT = Utilities.readInput("6.txt");
+    private static final String PUZZLE_INPUT = Files.read("6.txt");
 
     @Test
     void testParseExample() {

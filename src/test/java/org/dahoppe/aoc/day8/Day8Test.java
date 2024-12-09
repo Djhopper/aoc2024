@@ -1,5 +1,6 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day8;
 
+import org.dahoppe.aoc.util.Files;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -23,7 +24,7 @@ class Day8Test {
             ............
             ............
             """;
-    private static final String PUZZLE_INPUT = Utilities.readInput("8.txt");
+    private static final String PUZZLE_INPUT = Files.read("8.txt");
 
     @Test
     void testParseExample() {

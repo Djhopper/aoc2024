@@ -1,4 +1,6 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day6;
+
+import org.dahoppe.aoc.util.Parsing;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,16 +9,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Day6 {
+class Day6 {
 
-    public static int solveA(World world) {
+    static int solveA(World world) {
         return traverse(world).visited().stream()
                 .map(PositionAndDirection::position)
                 .collect(Collectors.toSet())
                 .size();
     }
 
-    public static int solveB(World world) {
+    static int solveB(World world) {
         int total = 0;
         for (Position position : world.allPositions().toList()) {
             if (world.get(position) instanceof Empty) {
@@ -30,7 +32,7 @@ public class Day6 {
         return total;
     }
 
-    public static TraversalResult traverse(World world) {
+    static TraversalResult traverse(World world) {
         PositionAndDirection guardStartPositionAndDirection = world.getGuardPositionAndDirection();
 
         Position guardPosition = guardStartPositionAndDirection.position();
@@ -62,20 +64,20 @@ public class Day6 {
         return new TraversalResult(visited, foundLoop);
     }
 
-    public record TraversalResult(Set<PositionAndDirection> visited, boolean foundLoop) {}
+    record TraversalResult(Set<PositionAndDirection> visited, boolean foundLoop) {}
 
-    public static class World {
+    static class World {
         List<List<Cell>> cells;
 
-        public World(String input) {
-            this.cells = Utilities.splitOnNewLine(input)
+        World(String input) {
+            this.cells = Parsing.splitOnNewLine(input)
                     .map(line -> line.chars()
                             .mapToObj(c -> Cell.fromCharacter((char) c))
                             .collect(Collectors.toList()))
                     .collect(Collectors.toList());
         }
 
-        public PositionAndDirection getGuardPositionAndDirection() {
+        PositionAndDirection getGuardPositionAndDirection() {
             return allPositions()
                     .flatMap(position -> {
                         if (get(position) instanceof Guard guard) {
@@ -87,43 +89,43 @@ public class Day6 {
                     .orElseThrow();
         }
 
-        public boolean isOutOfBounds(Position position) {
+        boolean isOutOfBounds(Position position) {
             return position.x() < 0 || position.x() >= getWidth() || position.y() < 0 || position.y() >= getHeight();
         }
 
-        public Cell get(Position position) {
+        Cell get(Position position) {
             return cells.get(position.y()).get(position.x());
         }
 
-        public void setSpace(Position position, Cell cell) {
+        void setSpace(Position position, Cell cell) {
             cells.get(position.y()).set(position.x(), cell);
         }
 
-        public Stream<Position> allPositions() {
+        Stream<Position> allPositions() {
             return IntStream.range(0, getHeight()).boxed()
                     .flatMap(i -> IntStream.range(0, getWidth())
                             .mapToObj(j -> new Position(i, j)));
         }
 
-        public int getHeight() {
+        int getHeight() {
             return cells.size();
         }
 
-        public int getWidth() {
+        int getWidth() {
             return cells.getFirst().size();
         }
     }
 
-    public record Position(int x, int y) {
-        public static Position move(Position position, Direction direction) {
+    record Position(int x, int y) {
+        static Position move(Position position, Direction direction) {
             return new Position(position.x() + direction.getXDir(), position.y() + direction.getYDir());
         }
     }
 
-    public record PositionAndDirection(Position position, Direction direction) {}
+    record PositionAndDirection(Position position, Direction direction) {}
 
-    public abstract sealed static class Cell permits Obstacle, Empty, Guard {
-        public static Cell fromCharacter(char character) {
+    abstract sealed static class Cell permits Obstacle, Empty, Guard {
+        static Cell fromCharacter(char character) {
             return switch (character) {
                 case '.' -> new Empty();
                 case '#' -> new Obstacle();
@@ -136,27 +138,23 @@ public class Day6 {
         }
     }
 
-    public static final class Obstacle extends Cell {
+    static final class Obstacle extends Cell {}
 
-    }
+    static final class Empty extends Cell {}
 
-    public static final class Empty extends Cell {
-
-    }
-
-    public static final class Guard extends Cell {
+    static final class Guard extends Cell {
         private final Direction direction;
 
-        public Guard(Direction direction) {
+        Guard(Direction direction) {
             this.direction = direction;
         }
 
-        public Direction direction() {
+        Direction direction() {
             return direction;
         }
     }
 
-    public enum Direction {
+    enum Direction {
         UP(0, -1),
         DOWN(0, 1),
         LEFT(-1, 0),
@@ -165,15 +163,15 @@ public class Day6 {
         private final int xDir;
         private final int yDir;
 
-        public int getXDir() {
+        int getXDir() {
             return xDir;
         }
 
-        public int getYDir() {
+        int getYDir() {
             return yDir;
         }
 
-        public static Direction rotated90(Direction direction) {
+        static Direction rotated90(Direction direction) {
             return switch (direction) {
                 case UP -> RIGHT;
                 case RIGHT -> DOWN;

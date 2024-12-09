@@ -1,14 +1,9 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day5;
 
+import org.dahoppe.aoc.util.Files;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,7 +39,7 @@ class Day5Test {
             61,13,29
             97,13,75,29,47
             """;
-    private static final String PUZZLE_INPUT = Utilities.readInput("5.txt");
+    private static final String PUZZLE_INPUT = Files.read("5.txt");
     private static final Logger log = LoggerFactory.getLogger(Day5Test.class);
 
     @Test

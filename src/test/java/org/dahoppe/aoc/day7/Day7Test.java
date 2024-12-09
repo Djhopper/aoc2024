@@ -1,9 +1,7 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day7;
 
+import org.dahoppe.aoc.util.Files;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +18,7 @@ class Day7Test {
             21037: 9 7 18 13
             292: 11 6 16 20
             """;
-    private static final String PUZZLE_INPUT = Utilities.readInput("7.txt");
+    private static final String PUZZLE_INPUT = Files.read("7.txt");
 
     @Test
     void testParseExample() {

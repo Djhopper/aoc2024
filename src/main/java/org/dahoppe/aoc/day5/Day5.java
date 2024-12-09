@@ -1,4 +1,4 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day5;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -7,15 +7,15 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import static java.util.function.Predicate.not;
-import static org.dahoppe.aoc.Utilities.*;
+import static org.dahoppe.aoc.util.Parsing.*;
 
-public class Day5 {
+class Day5 {
 
-    public record Rule(int mustOccurFirst, int mustOccurSecond) {}
+    record Rule(int mustOccurFirst, int mustOccurSecond) {}
 
-    public record Input(List<Rule> rules, List<List<Integer>> updates) {}
+    record Input(List<Rule> rules, List<List<Integer>> updates) {}
 
-    public static Input parseInput(String input) {
+    static Input parseInput(String input) {
         List<String> sections = splitOnDoubleNewLine(input).toList();
         assert sections.size() == 2;
         List<Rule> rules = splitOnNewLine(sections.getFirst())
@@ -35,14 +35,14 @@ public class Day5 {
         return new Input(rules, updates);
     }
 
-    public static int solveA(Input input) {
+    static int solveA(Input input) {
         return input.updates().stream()
                 .filter(isCorrectlyOrdered(input.rules()))
                 .mapToInt(Day5::getMiddleElement)
                 .sum();
     }
 
-    public static int solveB(Input input) {
+    static int solveB(Input input) {
         Comparator<Integer> comparator = comparatorFromRules(new HashSet<>(input.rules()));
         return input.updates().stream()
                 .filter(not(isCorrectlyOrdered(input.rules())))
@@ -78,7 +78,5 @@ public class Day5 {
             }
         };
     }
-
-
 
 }

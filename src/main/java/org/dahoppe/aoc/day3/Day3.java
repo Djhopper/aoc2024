@@ -1,4 +1,4 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day3;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Day3 {
+class Day3 {
 
     private static final Logger log = LoggerFactory.getLogger(Day3.class);
 
@@ -20,7 +20,7 @@ public class Day3 {
     private static final Pattern OVERALL_PATTERN = Pattern.compile(
             "(%s)|(%s)|(%s)".formatted(MUL_PATTERN.pattern(), DO_PATTERN.pattern(), DONT_PATTERN.pattern()));
 
-    public static List<Instruction> parseInput(String input) {
+    static List<Instruction> parseInput(String input) {
         List<Instruction> parsed = new ArrayList<>();
 
         Matcher matcher = OVERALL_PATTERN.matcher(input);
@@ -46,7 +46,7 @@ public class Day3 {
         return parsed;
     }
 
-    public static int solveA(List<Instruction> input) {
+    static int solveA(List<Instruction> input) {
         return input.stream()
                 .filter(instruction -> instruction instanceof Mul)
                 .map(instruction -> (Mul) instruction)
@@ -54,7 +54,7 @@ public class Day3 {
                 .sum();
     }
 
-    public static int solveB(List<Instruction> input) {
+    static int solveB(List<Instruction> input) {
         boolean enabled = true;
         int total = 0;
         for (Instruction instruction : input) {
@@ -75,23 +75,23 @@ public class Day3 {
         return total;
     }
 
-    public static abstract sealed class Instruction permits Mul, Do, Dont  {}
+    static abstract sealed class Instruction permits Mul, Do, Dont  {}
 
-    public static final class Mul extends Instruction {
+    static final class Mul extends Instruction {
 
         private final int right;
         private final int left;
 
-        public Mul(int left, int right) {
+        Mul(int left, int right) {
             this.left = left;
             this.right = right;
         }
 
-        public int left() {
+        int left() {
             return left;
         }
 
-        public int right() {
+        int right() {
             return right;
         }
 
@@ -113,7 +113,7 @@ public class Day3 {
         }
     }
 
-    public static final class Do extends Instruction {
+    static final class Do extends Instruction {
         @Override
         public String toString() {
             return "Do()";
@@ -125,7 +125,7 @@ public class Day3 {
         }
     }
 
-    public static final class Dont extends Instruction {
+    static final class Dont extends Instruction {
         @Override
         public String toString() {
             return "Dont()";

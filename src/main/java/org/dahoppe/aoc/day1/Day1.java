@@ -1,4 +1,6 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day1;
+
+import org.dahoppe.aoc.util.Parsing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,16 +9,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-public class Day1 {
+class Day1 {
 
-    public record Input(List<Integer> left, List<Integer> right) {}
+    record Input(List<Integer> left, List<Integer> right) {}
 
-    public static Input readInputFromResource(String filename) {
-        String rawInput = Utilities.readInput(filename);
-
+    static Input parseInput(String rawInput) {
         List<Integer> left = new ArrayList<>();
         List<Integer> right = new ArrayList<>();
-        Utilities.splitOnNewLine(rawInput)
+        Parsing.splitOnNewLine(rawInput)
                 .forEach(line -> {
                     String[] numbers = line.split("   ");
                     assert numbers.length == 2;
@@ -27,7 +27,7 @@ public class Day1 {
         return new Input(left, right);
     }
 
-    public static int solveA(Input input) {
+    static int solveA(Input input) {
         List<Integer> sortedLeft = input.left().stream().sorted().toList();
         List<Integer> sortedRight = input.right().stream().sorted().toList();
         int total = 0;
@@ -37,7 +37,7 @@ public class Day1 {
         return total;
     }
 
-    public static long solveB(Input input) {
+    static long solveB(Input input) {
         Map<Integer, Long> numberOfOccurencesInRightList = input.right().stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         return input.left().stream()

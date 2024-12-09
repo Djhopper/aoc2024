@@ -1,22 +1,22 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day4;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dahoppe.aoc.Utilities.splitOnNewLine;
+import static org.dahoppe.aoc.util.Parsing.splitOnNewLine;
 
 
-public class Day4 {
+class Day4 {
 
     private static final String TARGET_STRING = "XMAS";
 
-    public static List<List<Character>> parseInput(String input) {
+    static List<List<Character>> parseInput(String input) {
         return splitOnNewLine(input)
                 .map(Day4::toCharList)
                 .toList();
     }
 
-    public static int solveA(List<List<Character>> input) {
+    static int solveA(List<List<Character>> input) {
         final int width = input.size();
         final int height = input.getFirst().size();
         int total = 0;
@@ -50,7 +50,7 @@ public class Day4 {
         return potentialString.equals(toCharList(TARGET_STRING));
     }
 
-    public static int solveB(List<List<Character>> input) {
+    static int solveB(List<List<Character>> input) {
         final int width = input.size();
         final int height = input.getFirst().size();
         int total = 0;

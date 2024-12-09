@@ -1,24 +1,26 @@
-package org.dahoppe.aoc;
+package org.dahoppe.aoc.day8;
+
+import org.dahoppe.aoc.util.Parsing;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Day8 {
+class Day8 {
 
-    public record Input(int width, int height, Map<Character, Set<Position>> positions) {
-        public boolean isWithinBounds(Position position) {
+    record Input(int width, int height, Map<Character, Set<Position>> positions) {
+        boolean isWithinBounds(Position position) {
             return position.x() >= 0 && position.x() < width() && position.y() >= 0 && position.y() < height();
         }
     }
 
-    public record Position(int x, int y) {
-        public Position plus(Position position) {
+    record Position(int x, int y) {
+        Position plus(Position position) {
             return new Position(x + position.x(), y + position.y());
         }
-        public Position minus(Position position) {
+        Position minus(Position position) {
             return new Position(x - position.x(), y - position.y());
         }
-        public Position normalisedByGcd() {
+        Position normalisedByGcd() {
             int gcd = gcd(x, y);
             return new Position(x / gcd, y / gcd);
         }
@@ -27,8 +29,8 @@ public class Day8 {
         }
     }
 
-    public static Input parseInput(String input) {
-        List<String> lines = Utilities.splitOnNewLine(input).toList();
+    static Input parseInput(String input) {
+        List<String> lines = Parsing.splitOnNewLine(input).toList();
         int width = lines.getFirst().length();
         int height = lines.size();
         Map<Character, Set<Position>> positions = new HashMap<>();
@@ -43,7 +45,7 @@ public class Day8 {
         return new Input(width, height, positions);
     }
 
-    public static int solveA(Input input) {
+    static int solveA(Input input) {
         return input.positions().keySet().stream()
                 .flatMap(character -> antinodes(input, character).stream())
                 .collect(Collectors.toSet())
@@ -68,7 +70,7 @@ public class Day8 {
                 .collect(Collectors.toSet());
     }
 
-    public static int solveB(Input input) {
+    static int solveB(Input input) {
         return input.positions().keySet().stream()
                 .flatMap(character -> antinodesB(input, character).stream())
                 .collect(Collectors.toSet())
