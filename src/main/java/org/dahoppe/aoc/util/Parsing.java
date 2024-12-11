@@ -26,4 +26,9 @@ public class Parsing {
                 .toList();
     }
 
+    public static Stream<Long> treatAsSpaceSeparatedLongs(String input) {
+        return split(input, " ")
+                .map(Long::parseLong);
+    }
+
 }
