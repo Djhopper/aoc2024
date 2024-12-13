@@ -31,4 +31,10 @@ public class Parsing {
                 .map(Long::parseLong);
     }
 
+    public static List<Character> toListOfCharacters(String input) {
+        return input.chars()
+                .mapToObj(c -> (char) c)
+                .toList();
+    }
+
 }
