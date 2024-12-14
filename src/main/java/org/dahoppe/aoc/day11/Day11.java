@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Day11 {
+class Day11 {
 
     private static final Logger log = LoggerFactory.getLogger(Day11.class);
 

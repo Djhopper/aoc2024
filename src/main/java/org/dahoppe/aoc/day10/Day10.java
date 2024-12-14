@@ -4,7 +4,7 @@ import org.dahoppe.aoc.util.Parsing;
 
 import java.util.*;
 
-public class Day10 {
+class Day10 {
 
     record Node(int score, int x, int y, List<Node> canReach) {
         boolean isTrailhead() {

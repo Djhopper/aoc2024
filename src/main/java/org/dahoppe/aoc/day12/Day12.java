@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Day12 {
+class Day12 {
 
     private static final Logger log = LoggerFactory.getLogger(Day12.class);
 
